@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>BCV LIVE 2.0 | Sistema Profesional</title>
+    <title>BCV LIVE PRO</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
@@ -11,166 +11,135 @@
         body { background-color: #020617; font-family: 'Outfit', sans-serif; margin: 0; overflow: hidden; height: 100vh; color: white; }
         .pantalla { height: 100vh; display: flex; flex-direction: column; width: 100%; }
         #pantalla-principal { display: none; background: radial-gradient(circle at top, #0f172a 0%, #020617 100%); overflow-y: auto; }
-        
-        /* PIN PAD PROFESIONAL */
-        .pin-btn { background: rgba(30, 41, 59, 0.7); border: 1px solid rgba(255,255,255,0.1); padding: 20px; border-radius: 16px; font-size: 1.5rem; font-weight: 700; transition: all 0.2s; cursor: pointer; }
-        .pin-btn:active { background: #3b82f6; transform: scale(0.95); }
-        
-        /* TARJETAS DE TASAS */
-        .card-tasa { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 20px; padding: 20px; position: relative; }
+        .pin-btn { background: rgba(30, 41, 59, 0.7); border: 1px solid rgba(255,255,255,0.1); padding: 18px; border-radius: 16px; font-size: 1.4rem; font-weight: 700; cursor: pointer; }
+        .pin-btn:active { background: #3b82f6; }
+        .card-tasa { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 20px; padding: 18px; position: relative; }
         .card-tasa::before { content: ""; position: absolute; left: 0; top: 25%; height: 50%; width: 4px; border-radius: 0 4px 4px 0; }
         .usd::before { background: #3b82f6; box-shadow: 0 0 15px #3b82f6; }
         .eur::before { background: #eab308; box-shadow: 0 0 15px #eab308; }
-        
-        .monto { font-size: 2.5rem; font-weight: 900; letter-spacing: -1px; line-height: 1; margin-top: 5px; }
-        .etiqueta { font-size: 0.7rem; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 2px; }
-        
-        /* GACETA Y QR */
-        .gaceta-bar { background: rgba(255,255,255,0.05); border-radius: 18px; padding: 12px 18px; border: 1px solid rgba(255,255,255,0.1); }
-        .qr-frame { background: white; padding: 5px; border-radius: 10px; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
+        .monto { font-size: 2.3rem; font-weight: 900; letter-spacing: -1px; line-height: 1; margin-top: 5px; }
+        .etiqueta { font-size: 0.65rem; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 2px; }
     </style>
 </head>
 <body>
 
     <div id="bloqueo" class="pantalla items-center justify-center p-8 text-center bg-slate-950">
-        <div class="mb-10">
-            <h1 class="text-5xl font-black italic tracking-tighter">BCV <span class="text-blue-500 text-3xl">LIVE</span></h1>
-            <p class="text-[10px] text-blue-400 font-bold uppercase tracking-[4px] mt-2">Acceso Restringido</p>
+        <div class="mb-8">
+            <h1 class="text-4xl font-black italic">BCV <span class="text-blue-500">LIVE</span></h1>
+            <p class="text-[10px] text-blue-400 font-bold uppercase tracking-[3px] mt-1">ID: 8820</p>
         </div>
-        <div class="mb-6">
-            <p class="etiqueta mb-2 text-xs">Identificador ID</p>
-            <div id="id-bloqueo" class="text-blue-400 font-mono font-bold text-3xl tracking-tighter">-- -- --</div>
-        </div>
-        <input type="password" id="pin-input" readonly class="bg-transparent text-center text-4xl tracking-[12px] w-full text-white font-black mb-8 outline-none" placeholder="••••">
-        <div class="grid grid-cols-3 gap-3 w-full max-w-[300px]">
-            <script>
-                for(let i=1; i<=9; i++) document.write(`<button class="pin-btn" onclick="addPin('${i}')">${i}</button>`);
-            </script>
-            <button class="pin-btn text-red-500" onclick="clearPin()"><i class="fas fa-backspace"></i></button>
+        <input type="password" id="pin-input" readonly class="bg-transparent text-center text-4xl tracking-[10px] w-full text-white font-black mb-6 outline-none" placeholder="••••">
+        <div class="grid grid-cols-3 gap-3 w-full max-w-[280px]">
+            <button class="pin-btn" onclick="addPin('1')">1</button><button class="pin-btn" onclick="addPin('2')">2</button><button class="pin-btn" onclick="addPin('3')">3</button>
+            <button class="pin-btn" onclick="addPin('4')">4</button><button class="pin-btn" onclick="addPin('5')">5</button><button class="pin-btn" onclick="addPin('6')">6</button>
+            <button class="pin-btn" onclick="addPin('7')">7</button><button class="pin-btn" onclick="addPin('8')">8</button><button class="pin-btn" onclick="addPin('9')">9</button>
+            <button class="pin-btn text-red-500" onclick="clearPin()"><i class="fas fa-times"></i></button>
             <button class="pin-btn" onclick="addPin('0')">0</button>
-            <button class="pin-btn text-green-500" onclick="checkPin()"><i class="fas fa-fingerprint"></i></button>
+            <button class="pin-btn text-green-500" onclick="checkPin()"><i class="fas fa-check"></i></button>
         </div>
     </div>
 
-    <div id="pantalla-principal" class="pantalla p-6">
-        <header class="flex justify-between items-center mb-8">
+    <div id="pantalla-principal" class="pantalla p-5">
+        <header class="flex justify-between items-start mb-6">
             <div>
-                <h1 class="text-2xl font-black italic text-white">BCV LIVE <span class="text-blue-500 text-sm">PRO</span></h1>
-                <p id="reloj-vivo" class="text-[10px] text-slate-400 font-bold mt-1 tracking-widest"></p>
+                <h1 class="text-xl font-black italic">BCV LIVE <span class="text-blue-500 text-xs">2.0</span></h1>
+                <p id="reloj-vivo" class="text-[9px] text-slate-400 font-bold mt-1 uppercase"></p>
             </div>
-            <img src="https://upload.wikimedia.org/wikipedia/commons/e/e3/Logo_del_Banco_Central_de_Venezuela.svg" class="h-10">
+            <div class="text-right">
+                <p class="text-[10px] font-black leading-tight text-white uppercase tracking-tighter">Banco Central<br>de Venezuela</p>
+                <p class="text-[7px] font-bold text-blue-500 uppercase tracking-widest">Oficial</p>
+            </div>
         </header>
 
-        <main class="space-y-6">
+        <main class="space-y-4">
             <div class="card-tasa usd">
-                <p class="etiqueta text-blue-400">Dólar BCV (USD)</p>
-                <p id="tasa-dolar" class="monto">--,--</p>
+                <p class="etiqueta text-blue-400">Dólar BCV</p>
+                <p id="tasa-dolar" class="monto">Cargando...</p>
             </div>
-
             <div class="card-tasa eur">
-                <p class="etiqueta text-yellow-500">Euro BCV (EUR)</p>
-                <p id="tasa-euro" class="monto">--,--</p>
+                <p class="etiqueta text-yellow-500">Euro BCV</p>
+                <p id="tasa-euro" class="monto">Cargando...</p>
             </div>
 
-            <div class="gaceta-bar flex items-center justify-between">
-                <div class="flex items-center gap-4">
-                    <div class="qr-frame">
-                        <img src="https://api.qrserver.com/v1/create-qr-code/?size=60&data=https://www.bcv.org.ve" class="w-10 h-10">
-                    </div>
-                    <div>
-                        <p class="text-[11px] font-black uppercase text-white tracking-tighter">Gaceta Oficial</p>
-                        <p class="text-[9px] font-bold text-slate-500 uppercase">Validación Directa BCV</p>
-                    </div>
+            <div class="bg-white/5 p-4 rounded-2xl flex items-center justify-between border border-white/10">
+                <div class="flex items-center gap-3">
+                    <div class="bg-white p-1 rounded-lg"><img src="https://api.qrserver.com/v1/create-qr-code/?size=50&data=https://www.bcv.org.ve" class="w-8 h-8"></div>
+                    <p class="text-[9px] font-bold uppercase text-white">Gaceta Oficial<br><span class="text-slate-500">Validación BCV</span></p>
                 </div>
-                <button onclick="obtenerTasas()" class="text-blue-400 bg-blue-400/10 w-12 h-12 rounded-full flex items-center justify-center active:rotate-180 transition-all shadow-lg">
-                    <i id="sync-icon" class="fas fa-sync-alt text-xl"></i>
-                </button>
+                <button onclick="obtenerTasas()" class="text-blue-500 bg-blue-500/10 p-2 rounded-full"><i id="sync-icon" class="fas fa-sync-alt"></i></button>
             </div>
 
-            <div class="bg-gradient-to-br from-blue-900/40 to-black p-6 rounded-3xl border border-blue-500/20 shadow-2xl">
-                <div class="flex items-center gap-5 mb-5">
-                    <div class="bg-white p-2.5 rounded-2xl">
-                        <img id="qr-whatsapp" src="" class="w-20 h-20">
-                    </div>
+            <div class="bg-gradient-to-br from-blue-900/40 to-black p-5 rounded-3xl border border-blue-500/20 shadow-xl">
+                <div class="flex items-center gap-4 mb-4">
+                    <div class="bg-white p-2 rounded-xl"><img id="qr-whatsapp" src="" class="w-14 h-14"></div>
                     <div>
-                        <h2 class="text-xs font-black uppercase tracking-[3px] text-yellow-500 italic">Suscripción</h2>
-                        <p class="text-sm font-black text-white mt-1">+58 414 4042067</p>
-                        <p class="text-[10px] font-bold text-blue-400 mt-1 uppercase tracking-tighter">Pago Móvil Banesco</p>
+                        <h2 class="text-[10px] font-black uppercase text-yellow-500 tracking-widest">Suscripción Pro</h2>
+                        <p class="text-sm font-black text-white">+58 414 4042067</p>
                     </div>
                 </div>
-                <button onclick="copiarYEnviar()" class="w-full bg-blue-600 hover:bg-blue-500 py-4 rounded-2xl font-black text-xs uppercase tracking-[3px] shadow-lg shadow-blue-900/40 transition-all active:scale-95">
-                    Contactar para Activación
-                </button>
+                <button onclick="copiarYEnviar()" class="w-full bg-blue-600 py-3 rounded-xl font-black text-[10px] uppercase tracking-widest">Activar BCV LIVE</button>
             </div>
         </main>
-
-        <footer class="mt-auto py-6 text-center">
-            <p class="text-[9px] font-bold text-slate-600 uppercase tracking-[4px]">diste BCV LIVE +584144042067</p>
+        <footer class="mt-auto py-4 text-center">
+            <p class="text-[8px] font-bold text-slate-600 uppercase tracking-widest">diste BCV LIVE +584144042067</p>
         </footer>
     </div>
 
     <script>
-        let pin = ""; let currentID = ""; 
+        let pin = ""; let id_master = "8820";
         
-        function generarID() {
-            if(!localStorage.getItem('id_bcv_v12')) {
-                localStorage.setItem('id_bcv_v12', "88" + Math.floor(Math.random() * 9000000 + 1000000));
-            }
-            currentID = localStorage.getItem('id_bcv_v12');
-            document.getElementById('id-bloqueo').innerText = currentID;
-            
-            const msg = encodeURIComponent(`Hola Justo, mi ID es ${currentID}. Solicito activar BCV LIVE 2.0 y datos Banesco.`);
-            document.getElementById('qr-whatsapp').src = `https://api.qrserver.com/v1/create-qr-code/?size=150&data=https://wa.me/584144042067?text=${msg}`;
-        }
-
         async function obtenerTasas() {
             const sync = document.getElementById('sync-icon');
             sync.classList.add('fa-spin');
+            
+            // Usando un Proxy para saltar bloqueos de red
+            const proxy = "https://api.allorigins.win/get?url=";
+            const apiUSD = encodeURIComponent("https://ve.dolarapi.com/v1/dolares/oficial");
+            const apiEUR = encodeURIComponent("https://ve.dolarapi.com/v1/euro/oficial");
+
             try {
-                const [resD, resE] = await Promise.all([
-                    fetch('https://ve.dolarapi.com/v1/dolares/oficial'),
-                    fetch('https://ve.dolarapi.com/v1/euro/oficial')
-                ]);
-                const d = await resD.json();
-                const e = await resE.json();
+                // Carga de Dólar
+                const resD = await fetch(proxy + apiUSD);
+                const dataD = await resD.json();
+                const d = JSON.parse(dataD.contents);
                 document.getElementById('tasa-dolar').innerText = d.promedio.toLocaleString('es-VE', {minimumFractionDigits: 2});
+
+                // Carga de Euro
+                const resE = await fetch(proxy + apiEUR);
+                const dataE = await resE.json();
+                const e = JSON.parse(dataE.contents);
                 document.getElementById('tasa-euro').innerText = e.promedio.toLocaleString('es-VE', {minimumFractionDigits: 2});
-            } catch (err) { 
-                console.log("Error de red"); 
-                setTimeout(obtenerTasas, 3000);
-            } finally { 
-                setTimeout(() => sync.classList.remove('fa-spin'), 1000); 
+            } catch (err) {
+                console.error("Error cargando, reintentando...");
+                setTimeout(obtenerTasas, 4000);
+            } finally {
+                setTimeout(() => sync.classList.remove('fa-spin'), 1000);
             }
         }
 
         function checkPin() {
-            let u = currentID.substring(0,2) + currentID.slice(-2);
-            let m = (parseInt(u) * 3).toString();
-            if(pin === m || pin === "2026") { 
-                localStorage.setItem('auth_bcv_v12', 'true'); 
-                location.reload(); 
+            if(pin === "0324" || pin === "2026") {
+                localStorage.setItem('auth_bcv_v14', 'true');
+                location.reload();
             } else { alert("PIN INCORRECTO"); clearPin(); }
         }
 
-        function addPin(n) { if(pin.length < 6) { pin += n; document.getElementById('pin-input').value = pin; } }
+        function addPin(n) { if(pin.length < 4) { pin += n; document.getElementById('pin-input').value = pin; } }
         function clearPin() { pin = ""; document.getElementById('pin-input').value = ""; }
-        
-        function copiarYEnviar() {
-            const msg = encodeURIComponent(`Hola Justo, mi ID es ${currentID}. Solicito activar BCV LIVE 2.0 y datos Banesco.`);
-            window.open(`https://wa.me/584144042067?text=${msg}`, '_blank');
-        }
+        function copiarYEnviar() { window.open(`https://wa.me/584144042067?text=Activar%20ID:%208820`, '_blank'); }
 
         window.onload = () => {
-            generarID();
-            if(localStorage.getItem('auth_bcv_v12')) {
+            const msg = encodeURIComponent(`Hola Justo, activo mi BCV LIVE ID: 8820`);
+            document.getElementById('qr-whatsapp').src = `https://api.qrserver.com/v1/create-qr-code/?size=150&data=https://wa.me/584144042067?text=${msg}`;
+            
+            if(localStorage.getItem('auth_bcv_v14')) {
                 document.getElementById('bloqueo').style.display = 'none';
                 document.getElementById('pantalla-principal').style.display = 'flex';
                 obtenerTasas();
                 setInterval(obtenerTasas, 60000);
             }
             setInterval(() => {
-                const r = document.getElementById('reloj-vivo');
-                if(r) r.innerText = new Date().toLocaleString('es-VE', {day:'2-digit', month:'long', year:'numeric', hour:'2-digit', minute:'2-digit', second:'2-digit', hour12:true}).toUpperCase();
+                document.getElementById('reloj-vivo').innerText = new Date().toLocaleString('es-VE', {day:'2-digit', month:'short', hour:'2-digit', minute:'2-digit', second:'2-digit'}).toUpperCase();
             }, 1000);
         };
     </script>
