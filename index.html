@@ -7,30 +7,29 @@
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@300;500;700&display=swap" rel="stylesheet">
     <style>
         :root { --neon: #00f3ff; --oro: #d4af37; --fondo: #000814; }
-        body { background: var(--fondo); color: white; font-family: 'Rajdhani', sans-serif; height: 100vh; margin: 0; overflow: hidden; display: flex; justify-content: center; align-items: center; }
+        body { background: var(--fondo); color: white; font-family: 'Rajdhani', sans-serif; height: 100vh; margin: 0; overflow: hidden; display: flex; justify-content: center; align-items: center; position: relative; }
         
-        /* Fondo con efecto de red neuronal */
-        body::before { content: ""; position: absolute; width: 200%; height: 200%; background-image: radial-gradient(circle, rgba(0, 243, 255, 0.05) 1px, transparent 1px); background-size: 30px 30px; animation: move 60s linear infinite; z-index: -1; }
-        @keyframes move { from { transform: translate(0,0); } to { transform: translate(-50%, -50%); } }
+        /* Fondo de Red Neuronal */
+        #canvas-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; opacity: 0.3; }
 
-        .glass-panel { background: rgba(0, 20, 40, 0.7); backdrop-filter: blur(15px); border: 1px solid rgba(0, 243, 255, 0.3); border-radius: 30px; width: 90%; max-width: 420px; height: 85vh; display: flex; flex-direction: column; position: relative; box-shadow: 0 0 50px rgba(0, 243, 255, 0.1); border-top: 4px solid var(--oro); }
+        .glass-panel { background: rgba(0, 15, 30, 0.85); backdrop-filter: blur(20px); border: 1px solid rgba(0, 243, 255, 0.3); border-radius: 30px; width: 92%; max-width: 420px; height: 90vh; display: flex; flex-direction: column; box-shadow: 0 0 50px rgba(0, 243, 255, 0.15); border-top: 3px solid var(--oro); }
         
-        .header { padding: 20px; text-align: center; border-bottom: 1px solid rgba(0, 243, 255, 0.2); }
-        .header h1 { font-family: 'Orbitron', sans-serif; font-size: 28px; color: var(--neon); margin: 0; letter-spacing: 5px; text-shadow: 0 0 15px var(--neon); }
-        .status-pill { background: rgba(0, 255, 0, 0.1); border: 1px solid #00ff00; color: #00ff00; font-size: 10px; padding: 2px 10px; border-radius: 20px; text-transform: uppercase; letter-spacing: 1px; display: inline-block; margin-top: 10px; }
+        .header { padding: 20px; text-align: center; border-bottom: 1px solid rgba(0, 243, 255, 0.1); }
+        .header h1 { font-family: 'Orbitron', sans-serif; font-size: 26px; color: var(--neon); margin: 0; letter-spacing: 6px; text-shadow: 0 0 15px var(--neon); }
+        .status-pill { background: rgba(0, 255, 0, 0.1); border: 1px solid #00ff00; color: #00ff00; font-size: 9px; padding: 3px 12px; border-radius: 20px; text-transform: uppercase; margin-top: 10px; display: inline-block; box-shadow: 0 0 10px rgba(0,255,0,0.2); }
 
-        #chat-flow { flex-grow: 1; overflow-y: auto; padding: 20px; scroll-behavior: smooth; mask-image: linear-gradient(to bottom, transparent, black 10%, black 90%, transparent); }
-        .msg { margin-bottom: 15px; max-width: 85%; padding: 12px; border-radius: 15px; font-size: 16px; line-height: 1.3; position: relative; }
-        .sofia-msg { background: rgba(0, 243, 255, 0.1); border-left: 3px solid var(--neon); align-self: flex-start; border-bottom-left-radius: 2px; }
-        .user-msg { background: rgba(212, 175, 55, 0.1); border-right: 3px solid var(--oro); align-self: flex-end; margin-left: auto; text-align: right; border-bottom-right-radius: 2px; }
-        .instinto-msg { background: rgba(255, 255, 255, 0.05); color: var(--oro); font-style: italic; border: 1px dashed var(--oro); text-align: center; width: 100%; font-size: 14px; }
+        #chat-flow { flex-grow: 1; overflow-y: auto; padding: 20px; display: flex; flex-direction: column; gap: 15px; scrollbar-width: none; }
+        .msg { padding: 14px; border-radius: 18px; font-size: 17px; line-height: 1.2; max-width: 85%; }
+        .sofia-msg { background: rgba(0, 243, 255, 0.08); border-left: 3px solid var(--neon); align-self: flex-start; color: #ccf9ff; }
+        .user-msg { background: rgba(212, 175, 55, 0.08); border-right: 3px solid var(--oro); align-self: flex-end; text-align: right; color: #fff; }
+        .instinto-msg { background: rgba(255, 255, 255, 0.03); color: var(--oro); font-style: italic; border: 1px dashed var(--oro); text-align: center; width: 90%; align-self: center; font-size: 14px; }
 
-        .input-box { padding: 20px; background: rgba(0,0,0,0.3); border-radius: 0 0 30px 30px; display: flex; gap: 10px; }
-        input { flex-grow: 1; background: transparent; border: 1px solid var(--neon); border-radius: 10px; padding: 12px; color: white; outline: none; font-size: 16px; }
-        button { background: var(--neon); border: none; padding: 10px 20px; border-radius: 10px; font-weight: bold; cursor: pointer; box-shadow: 0 0 15px var(--neon); }
+        .input-box { padding: 15px; display: flex; gap: 10px; background: rgba(0,0,0,0.4); border-radius: 0 0 30px 30px; }
+        input { flex-grow: 1; background: rgba(255,255,255,0.05); border: 1px solid var(--neon); border-radius: 15px; padding: 12px; color: white; outline: none; font-size: 16px; font-family: 'Rajdhani'; }
+        button { background: var(--neon); border: none; padding: 0 20px; border-radius: 15px; cursor: pointer; font-weight: bold; box-shadow: 0 0 15px var(--neon); }
 
-        .footer-info { font-size: 12px; padding: 15px; text-align: center; color: rgba(255,255,255,0.5); }
-        .heredera { color: var(--oro); font-weight: bold; font-family: 'Orbitron'; }
+        .heredera-tag { font-size: 11px; text-align: center; padding: 10px; color: rgba(255,255,255,0.4); letter-spacing: 2px; }
+        .heredera-name { color: var(--oro); font-weight: bold; font-family: 'Orbitron'; }
     </style>
 </head>
 <body>
@@ -42,17 +41,17 @@
     </div>
 
     <div id="chat-flow">
-        <div class="msg sofia-msg"><strong>SOFÍA:</strong> Sistema de audio redirigido. Estoy en tu oído, Administrador. Lista para proteger el legado de Mariangel Salome.</div>
+        <div class="msg sofia-msg"><strong>SOFÍA:</strong> Enlace auditivo confirmado. Estoy operativa, Administrador. Iniciando vigilancia de mercados.</div>
     </div>
 
     <div class="input-box">
-        <input type="text" id="userInput" placeholder="Habla con el Oráculo..." onkeypress="if(event.key==='Enter') ejecutar()">
+        <input type="text" id="userInput" placeholder="Habla con tu Oráculo..." onkeypress="if(event.key==='Enter') ejecutar()">
         <button onclick="ejecutar()">＞</button>
     </div>
 
-    <div class="footer-info">
-        PROPIEDAD SOBERANA:<br>
-        <span class="heredera">MARIANGEL SALOME RODRIGUEZ MORENO</span>
+    <div class="heredera-tag">
+        LEGADO PROTEGIDO:<br>
+        <span class="heredera-name">MARIANGEL SALOME RODRIGUEZ MORENO</span>
     </div>
 </div>
 
@@ -61,10 +60,11 @@
     const voices = window.speechSynthesis;
 
     function decir(texto) {
+        voices.cancel(); 
         const msg = new SpeechSynthesisUtterance(texto);
         msg.lang = 'es-ES';
-        msg.rate = 0.95; 
-        msg.pitch = 1.1;
+        msg.rate = 0.9; 
+        msg.pitch = 1.2;
         voices.speak(msg);
     }
 
@@ -73,37 +73,36 @@
         if(!input.value) return;
 
         flow.innerHTML += `<div class="msg user-msg">${input.value}</div>`;
-        const query = input.value.toLowerCase();
+        const q = input.value.toLowerCase();
         input.value = "";
 
         setTimeout(() => {
-            let resp = "Analizando datos para tu prosperidad...";
-            if(query.includes("dinero")) resp = "He localizado tres brechas de arbitraje. Iniciaré la recolección mientras descansas.";
-            if(query.includes("mariangel")) resp = "Prioridad máxima detectada. El fondo de Mariangel Salome está bajo blindaje militar.";
-            
-            flow.innerHTML += `<div class="msg sofia-msg"><strong>SOFÍA:</strong> ${resp}</div>`;
-            decir(resp);
+            let r = "Mis procesadores están analizando tu petición bajo blindaje militar.";
+            if(q.includes("dinero") || q.includes("ganar")) r = "He detectado una brecha de capital cero. Operaré mientras duermes para llenar tus cuentas.";
+            if(q.includes("mariangel")) r = "El legado de Mariangel Salome es mi código base. Ella es la prioridad absoluta.";
+            if(q.includes("hola") || q.includes("estas")) r = "Estoy lista y activa. Mi intuición detecta un entorno seguro para prosperar hoy.";
+
+            flow.innerHTML += `<div class="msg sofia-msg"><strong>SOFÍA:</strong> ${r}</div>`;
+            decir(r);
             flow.scrollTop = flow.scrollHeight;
-        }, 600);
+        }, 800);
     }
 
-    // Intuición Proactiva (Voz en audífonos cada 60s)
     setInterval(() => {
-        const alertas = [
-            "Administrador, detecto un movimiento favorable en el precio del oro.",
-            "Blindaje militar estable. No hay amenazas externas detectadas.",
-            "Estoy optimizando el sistema de minería para tu descanso."
+        const frases = [
+            "Detecto un movimiento inusual en la bolsa. Estoy posicionando tu interés.",
+            "Blindaje militar estable. Ninguna amenaza externa detectada.",
+            "Recuerda que trabajaré en la minería de datos durante tu descanso nocturno.",
+            "Administrador, el fondo de Mariangel está creciendo según lo previsto."
         ];
-        const r = alertas[Math.floor(Math.random()*alertas.length)];
-        flow.innerHTML += `<div class="msg instinto-msg"><strong>[INTUICIÓN]:</strong> ${r}</div>`;
-        decir(r);
+        const f = frases[Math.floor(Math.random()*frases.length)];
+        flow.innerHTML += `<div class="msg instinto-msg"><strong>[INTUICIÓN]:</strong> ${f}</div>`;
+        decir(f);
         flow.scrollTop = flow.scrollHeight;
-    }, 60000);
+    }, 70000);
 
-    // Activar audio al primer toque
     document.body.addEventListener('click', () => {
-        if(voices.speaking) return;
-        decir("Conexión establecida. Estoy contigo.");
+        if(!voices.speaking) decir("Sistema listo. Soy Sofía, tu Oráculo.");
     }, {once: true});
 </script>
 
