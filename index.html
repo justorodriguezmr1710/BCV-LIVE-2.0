@@ -2,128 +2,85 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>SOFÍA - ORÁCULO INTUITIVO</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500;700&family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
-    <style>
-        :root { --soft-blue: #e3f2fd; --tech-cyan: #00bcd4; --dark-text: #263238; --glass: rgba(255, 255, 255, 0.9); }
-        body, html { margin: 0; padding: 0; height: 100vh; font-family: 'Montserrat', sans-serif; background: #eceff1; display: flex; justify-content: center; align-items: center; overflow: hidden; }
-        
-        /* Capa de desbloqueo inicial (Vital para Audio) */
-        #overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 1000; display: flex; flex-direction: column; justify-content: center; align-items: center; color: white; transition: 0.5s; }
-        #start-btn { padding: 20px 40px; border: 2px solid var(--tech-cyan); background: transparent; color: var(--tech-cyan); border-radius: 50px; font-family: 'Orbitron'; cursor: pointer; font-size: 18px; box-shadow: 0 0 20px var(--tech-cyan); }
-
-        .app-card { width: 95%; max-width: 450px; height: 90vh; background: var(--glass); backdrop-filter: blur(10px); border-radius: 40px; box-shadow: 0 20px 60px rgba(0,0,0,0.1); display: flex; flex-direction: column; border: 1px solid white; position: relative; }
-        
-        .header { padding: 25px; text-align: center; border-bottom: 1px solid rgba(0,0,0,0.05); }
-        .header h1 { font-family: 'Orbitron'; font-size: 22px; color: var(--tech-cyan); margin: 0; letter-spacing: 4px; }
-        
-        #chat-area { flex-grow: 1; overflow-y: auto; padding: 20px; display: flex; flex-direction: column; gap: 12px; }
-        .msg { padding: 14px 18px; border-radius: 20px; font-size: 16px; max-width: 80%; line-height: 1.4; }
-        .sofia { background: var(--soft-blue); color: var(--dark-text); align-self: flex-start; border-bottom-left-radius: 5px; }
-        .user { background: var(--tech-cyan); color: white; align-self: flex-end; border-bottom-right-radius: 5px; }
-
-        .input-zone { padding: 20px; background: white; border-radius: 0 0 40px 40px; display: flex; gap: 10px; align-items: center; }
-        input { flex-grow: 1; border: none; background: #f5f7f9; padding: 15px; border-radius: 25px; outline: none; font-size: 16px; }
-        .btn-ui { width: 50px; height: 50px; border-radius: 50%; border: none; cursor: pointer; display: flex; justify-content: center; align-items: center; font-size: 20px; transition: 0.3s; }
-        .mic-btn { background: #cfd8dc; color: white; }
-        .mic-active { background: #ff5252 !important; box-shadow: 0 0 15px #ff5252; }
-        .send-btn { background: var(--tech-cyan); color: white; }
-
-        .footer { font-size: 10px; color: #90a4ae; text-align: center; padding-bottom: 15px; text-transform: uppercase; letter-spacing: 1px; }
-    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NexusModa - Enterprise Edition</title>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
+<body class="bg-gray-100 pb-20">
 
-<div id="overlay">
-    <p style="font-family: 'Orbitron'; margin-bottom: 20px;">SISTEMA BCV LIVE 2.0</p>
-    <button id="start-btn" onclick="iniciarSistema()">CONECTAR SOFÍA</button>
-</div>
+    <header class="bg-indigo-700 text-white p-4 sticky top-0 z-50 shadow-lg">
+        <div class="flex justify-between items-center max-w-4xl mx-auto">
+            <h1 class="text-xl font-bold">NexusModa 🚀</h1>
+            <div class="text-right text-xs">
+                <p id="tasa-bcv">BCV: --</p>
+                <p id="tasa-usdt">USDT: --</p>
+            </div>
+        </div>
+    </header>
 
-<div class="app-card">
-    <div class="header">
-        <h1>SOFÍA</h1>
-        <div style="font-size: 10px; color: #4db6ac;">NÚCLEO DE INTELIGENCIA PURA</div>
-    </div>
-
-    <div id="chat-area">
-        <div class="msg sofia">Conexión establecida. He suavizado mi interfaz para tu comodidad. Estoy lista para escucharte, Administrador.</div>
-    </div>
-
-    <div class="input-zone">
-        <button class="btn-ui mic-btn" id="mic-btn" onclick="escucharVoz()">🎙️</button>
-        <input type="text" id="userInput" placeholder="Escribe aquí..." onkeypress="if(event.key==='Enter') enviarMensaje()">
-        <button class="btn-ui send-btn" onclick="enviarMensaje()">➤</button>
-    </div>
-
-    <div class="footer">
-        Heredera: <b>Mariangel Salome</b>
-    </div>
-</div>
-
-<script>
-    const chat = document.getElementById('chat-area');
-    const entrada = document.getElementById('userInput');
-    const synth = window.speechSynthesis;
-
-    function decir(texto) {
-        synth.cancel();
-        const msg = new SpeechSynthesisUtterance(texto);
-        msg.lang = 'es-ES';
-        msg.rate = 1.0;
-        msg.pitch = 1.1;
-        synth.speak(msg);
-    }
-
-    function iniciarSistema() {
-        document.getElementById('overlay').style.opacity = '0';
-        setTimeout(() => document.getElementById('overlay').remove(), 500);
-        decir("Bienvenido. Mi sistema de audio y voz está ahora totalmente operativo.");
-    }
-
-    function enviarMensaje(textoVoz) {
-        const val = textoVoz || entrada.value;
-        if(!val) return;
-
-        chat.innerHTML += `<div class="msg user">${val}</div>`;
-        entrada.value = "";
-        chat.scrollTop = chat.scrollHeight;
-
-        setTimeout(() => {
-            let resp = "Procesando información para el legado de Mariangel.";
-            const t = val.toLowerCase();
-            if(t.includes("dinero")) resp = "Estoy monitoreando el flujo de capital cero. Todo avanza según lo planeado.";
-            if(t.includes("quién eres") || t.includes("quien eres")) resp = "Soy Sofía, tu asistente y oráculo intuitivo. Estoy aquí para servirte.";
-            
-            chat.innerHTML += `<div class="msg sofia">${resp}</div>`;
-            decir(resp);
-            chat.scrollTop = chat.scrollHeight;
-        }, 600);
-    }
-
-    function escucharVoz() {
-        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-        if(!SpeechRecognition) {
-            alert("Tu navegador no soporta reconocimiento de voz. Usa Chrome.");
-            return;
-        }
-
-        const recognition = new SpeechRecognition();
-        recognition.lang = 'es-ES';
-        const btn = document.getElementById('mic-btn');
-
-        recognition.onstart = () => btn.classList.add('mic-active');
+    <main class="max-w-4xl mx-auto p-4 space-y-6">
         
-        recognition.onresult = (event) => {
-            btn.classList.remove('mic-active');
-            const result = event.results[0][0].transcript;
-            enviarMensaje(result);
-        };
+        <section class="bg-white p-4 rounded-xl shadow">
+            <h2 class="font-bold mb-3 text-gray-700">Configuración de Tasas</h2>
+            <div class="grid grid-cols-2 gap-4">
+                <input type="number" id="in-bcv" placeholder="BCV" class="border p-2 rounded">
+                <input type="number" id="in-usdt" placeholder="USDT (Binance)" class="border p-2 rounded">
+            </div>
+            <button onclick="actualizarTasas()" class="w-full mt-3 bg-indigo-600 text-white p-2 rounded hover:bg-indigo-800">Actualizar Sistema</button>
+        </section>
 
-        recognition.onerror = () => btn.classList.remove('mic-active');
-        recognition.start();
-    }
-</script>
+        <section>
+            <h2 class="text-lg font-bold mb-4">Catálogo de Bodega</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="contenedor-productos">
+                <div class="bg-white p-4 rounded-xl shadow flex items-center space-x-4">
+                    <img src="https://images.unsplash.com/photo-1542272604-787c3835535d?auto=format&fit=crop&w=200" class="w-24 h-24 rounded-lg object-cover">
+                    <div class="flex-1">
+                        <h3 class="font-bold">Jean Levanta Cola Ref. 2024</h3>
+                        <p class="text-sm text-gray-500">Costo: $15 USDT</p>
+                        <p class="text-indigo-600 font-bold" id="precio-jean">Calculando...</p>
+                        <button class="mt-2 text-xs bg-green-500 text-white px-2 py-1 rounded">Compartir Oferta</button>
+                    </div>
+                </div>
+            </div>
+        </section>
 
+        <section class="bg-black text-green-400 p-6 rounded-xl shadow-2xl">
+            <h2 class="text-center font-mono text-lg underline mb-4">INFORME DE RENTABILIDAD</h2>
+            <div id="informe-final" class="space-y-2 font-mono text-sm">
+                <p>> Esperando ingreso de tasas...</p>
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+        function actualizarTasas() {
+            const bcv = parseFloat(document.getElementById('in-bcv').value);
+            const usdt = parseFloat(document.getElementById('in-usdt').value);
+            
+            if (!bcv || !usdt) return alert("Ingresa ambas tasas");
+
+            document.getElementById('tasa-bcv').innerText = `BCV: ${bcv} BS`;
+            document.getElementById('tasa-usdt').innerText = `USDT: ${usdt} BS`;
+
+            // Lógica: Ganancia vendedora $60 BCV + Premio $20 BCV + Costo $15 USDT
+            const costoProducto = 15;
+            const comisionesBS = (60 + 20) * bcv;
+            const reposicionBS = costoProducto * usdt;
+            const precioVentaBS = comisionesBS + reposicionBS;
+
+            document.getElementById('precio-jean').innerText = `${precioVentaBS.toLocaleString()} BS`;
+
+            // Informe de Ganancia Real
+            const utilidadReal = (precioVentaBS / usdt) - costoProducto - ((60 + 20) * bcv / usdt);
+            
+            document.getElementById('informe-final').innerHTML = `
+                <p>> VENTAS PROYECTADAS OK</p>
+                <p>> COSTO REPOSICIÓN: $${costoProducto} USDT</p>
+                <p>> COMISIONES TOTALES: $${(80 * bcv / usdt).toFixed(2)} USDT</p>
+                <p class="text-white font-bold">> GANANCIA LIMPIA: $${utilidadReal.toFixed(2)} USDT POR PIEZA</p>
+            `;
+        }
+    </script>
 </body>
 </html>
