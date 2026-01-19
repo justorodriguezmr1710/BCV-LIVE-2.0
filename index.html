@@ -2,116 +2,64 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>BCV LIVE PRO</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ORÁCULO SOFÍA - ASISTENTE DE PROSPERIDAD</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;900&display=swap');
-        body { background-color: #020617; font-family: 'Outfit', sans-serif; margin: 0; overflow: hidden; height: 100vh; color: white; }
-        .pantalla { height: 100vh; display: flex; flex-direction: column; width: 100%; }
-        #pantalla-principal { display: none; background: radial-gradient(circle at top, #0f172a 0%, #020617 100%); overflow-y: auto; }
-        .pin-btn { background: rgba(30, 41, 59, 0.7); border: 1px solid rgba(255, 255, 255, 0.1); padding: 18px; border-radius: 16px; font-size: 1.4rem; font-weight: 700; }
-        .card-tasa { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 20px; padding: 18px; position: relative; }
-        .card-tasa::before { content: ""; position: absolute; left: 0; top: 25%; height: 50%; width: 4px; border-radius: 0 4px 4px 0; }
-        .usd::before { background: #3b82f6; box-shadow: 0 0 15px #3b82f6; }
-        .eur::before { background: #eab308; box-shadow: 0 0 15px #eab308; }
-        .monto { font-size: 2.3rem; font-weight: 900; letter-spacing: -1px; line-height: 1; margin-top: 5px; }
-        .etiqueta { font-size: 0.65rem; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 2px; }
+        :root { --oro: #d4af37; --azul-militar: #001a33; --blanco: #ffffff; }
+        body { background-color: #00050a; color: var(--blanco); display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; font-family: 'Orbitron', sans-serif; font-family: sans-serif; }
+        .oraculo-container { background: linear-gradient(145deg, #001a33, #000c1a); width: 90%; max-width: 400px; padding: 30px; border-radius: 20px; border: 2px solid var(--oro); box-shadow: 0 0 20px rgba(212, 175, 55, 0.3); text-align: center; position: relative; overflow: hidden; }
+        .oraculo-container::before { content: ""; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(circle, rgba(212,175,55,0.05) 0%, transparent 70%); pointer-events: none; }
+        h1 { color: var(--oro); font-size: 24px; letter-spacing: 3px; margin: 10px 0; text-transform: uppercase; }
+        .status-asistente { font-size: 12px; color: #00ff00; margin-bottom: 20px; text-transform: uppercase; font-weight: bold; }
+        .data-box { background: rgba(255,255,255,0.05); border: 1px solid rgba(212,175,55,0.2); border-radius: 12px; padding: 15px; margin: 15px 0; }
+        .precio { font-size: 28px; font-weight: bold; color: var(--blanco); margin: 10px 0; display: flex; justify-content: space-between; }
+        .moneda { color: var(--oro); font-size: 16px; }
+        .id-cuantico { font-size: 10px; color: #4da6ff; text-decoration: none; word-break: break-all; display: block; margin: 15px 0; font-family: monospace; letter-spacing: 1px; }
+        .footer-legado { font-size: 13px; color: var(--blanco); margin-top: 20px; border-top: 1px solid var(--oro); padding-top: 15px; }
+        .contacto { color: var(--oro); font-weight: bold; display: block; margin-top: 5px; text-decoration: none; }
     </style>
 </head>
 <body>
 
-    <div id="bloqueo" class="pantalla items-center justify-center p-8 text-center bg-slate-950">
-        <div class="mb-8">
-            <h1 class="text-4xl font-black italic">BCV <span class="text-blue-500">LIVE</span></h1>
-            <p class="text-[10px] text-blue-400 font-bold uppercase mt-1">SISTEMA ID: 8820</p>
-        </div>
-        <input type="password" id="pin-input" readonly class="bg-transparent text-center text-4xl tracking-[10px] w-full text-white font-black mb-6 outline-none" placeholder="••••">
-        <div class="grid grid-cols-3 gap-3 w-full max-w-[280px]">
-            <button class="pin-btn" onclick="addPin('1')">1</button><button class="pin-btn" onclick="addPin('2')">2</button><button class="pin-btn" onclick="addPin('3')">3</button>
-            <button class="pin-btn" onclick="addPin('4')">4</button><button class="pin-btn" onclick="addPin('5')">5</button><button class="pin-btn" onclick="addPin('6')">6</button>
-            <button class="pin-btn" onclick="addPin('7')">7</button><button class="pin-btn" onclick="addPin('8')">8</button><button class="pin-btn" onclick="addPin('9')">9</button>
-            <button class="pin-btn text-red-500" onclick="clearPin()"><i class="fas fa-times"></i></button>
-            <button class="pin-btn" onclick="addPin('0')">0</button>
-            <button class="pin-btn text-green-500" onclick="checkPin()"><i class="fas fa-check"></i></button>
-        </div>
+<div class="oraculo-container">
+    <div class="status-asistente">● SOFÍA: ONLINE | BLINDAJE ACTIVADO</div>
+    <h1>ORÁCULO SOFÍA</h1>
+    <div id="reloj" style="font-size: 14px; color: #aaa;">Sincronizando...</div>
+
+    <div class="data-box">
+        <div class="precio"><span class="moneda">USD</span> <span id="usd">--.--</span></div>
+        <div class="precio"><span class="moneda">EUR</span> <span id="eur">--.--</span></div>
     </div>
 
-    <div id="pantalla-principal" class="pantalla p-5">
-        <header class="flex justify-between items-start mb-6">
-            <div><h1 class="text-xl font-black italic">BCV LIVE <span class="text-blue-500 text-xs">2.0</span></h1><p id="reloj-vivo" class="text-[9px] text-slate-400 font-bold mt-1 uppercase"></p></div>
-            <div class="text-right"><p class="text-[10px] font-black leading-tight text-white uppercase">Banco Central<br>de Venezuela</p></div>
-        </header>
-
-        <main class="space-y-4">
-            <div class="card-tasa usd"><p class="etiqueta text-blue-400">Dólar BCV</p><p id="tasa-dolar" class="monto">Cargando...</p></div>
-            <div class="card-tasa eur"><p class="etiqueta text-yellow-500">Euro BCV</p><p id="tasa-euro" class="monto">Cargando...</p></div>
-            <div class="bg-white/5 p-4 rounded-2xl flex items-center justify-between border border-white/10">
-                <div class="flex items-center gap-3"><div class="bg-white p-1 rounded-lg"><img src="https://api.qrserver.com/v1/create-qr-code/?size=50&data=https://www.bcv.org.ve" class="w-8 h-8"></div><p class="text-[9px] font-bold uppercase text-white">Gaceta Oficial</p></div>
-                <button onclick="obtenerTasas()" class="text-blue-500 bg-blue-500/10 p-2 rounded-full"><i id="sync-icon" class="fas fa-sync-alt"></i></button>
-            </div>
-            <div class="bg-gradient-to-br from-blue-900/40 to-black p-5 rounded-3xl border border-blue-500/20 shadow-xl">
-                <div class="flex items-center gap-4 mb-4"><div class="bg-white p-2 rounded-xl"><img id="qr-whatsapp" src="" class="w-14 h-14"></div><div><h2 class="text-[10px] font-black uppercase text-yellow-500 tracking-widest">Suscripción Pro</h2><p class="text-sm font-black text-white">+58 414 4042067</p></div></div>
-                <button onclick="copiarYEnviar()" class="w-full bg-blue-600 py-3 rounded-xl font-black text-[10px] uppercase">Activar BCV LIVE</button>
-            </div>
-        </main>
-        <footer class="mt-auto py-4 text-center"><p class="text-[8px] font-bold text-slate-600 uppercase tracking-widest">diste BCV LIVE +584144042067</p></footer>
+    <div id="vision-oraculo" style="font-style: italic; color: #4da6ff; font-size: 13px; margin: 10px 0;">
+        "Analizando brechas de mercado para tu prosperidad..."
     </div>
 
-    <script>
-        let pin = ""; 
-        async function obtenerTasas() {
-            const sync = document.getElementById('sync-icon');
-            if(sync) sync.classList.add('fa-spin');
-            try {
-                // MÉTODO DIRECTO (Más rápido)
-                const resD = await fetch('https://ve.dolarapi.com/v1/dolares/oficial');
-                const d = await resD.json();
-                document.getElementById('tasa-dolar').innerText = d.promedio.toFixed(2).replace('.', ',');
-                
-                const resE = await fetch('https://ve.dolarapi.com/v1/euro/oficial');
-                const e = await resE.json();
-                document.getElementById('tasa-euro').innerText = e.promedio.toFixed(2).replace('.', ',');
-            } catch (err) {
-                // MÉTODO DE RESPALDO SI EL PRIMERO FALLA
-                console.log("Cargando vía Proxy...");
-                const proxy = "https://api.allorigins.win/get?url=";
-                fetch(proxy + encodeURIComponent("https://ve.dolarapi.com/v1/dolares/oficial"))
-                    .then(r => r.json()).then(data => {
-                        const val = JSON.parse(data.contents);
-                        document.getElementById('tasa-dolar').innerText = val.promedio.toFixed(2).replace('.', ',');
-                    });
-                fetch(proxy + encodeURIComponent("https://ve.dolarapi.com/v1/euro/oficial"))
-                    .then(r => r.json()).then(data => {
-                        const val = JSON.parse(data.contents);
-                        document.getElementById('tasa-euro').innerText = val.promedio.toFixed(2).replace('.', ',');
-                    });
-            } finally { setTimeout(() => { if(sync) sync.classList.remove('fa-spin'); }, 1000); }
-        }
+    <a href="#" id="link-cuantico" class="id-cuantico">ID_CUANTICO_CARGANDO</a>
 
-        function checkPin() {
-            if(pin === "0324" || pin === "2026") { localStorage.setItem('auth_final_v20', 'true'); location.reload(); }
-            else { alert("PIN INCORRECTO"); clearPin(); }
-        }
-        function addPin(n) { if(pin.length < 4) { pin += n; document.getElementById('pin-input').value = pin; } }
-        function clearPin() { pin = ""; document.getElementById('pin-input').value = ""; }
-        function copiarYEnviar() { window.open(`https://wa.me/584144042067?text=Activar%20ID:%208820`, '_blank'); }
+    <div class="footer-legado">
+        PROPIEDAD DE: <strong>MARIANGEL SALOME</strong>
+        <a href="tel:+584144042067" class="contacto">CONTACTAR ASISTENTE: +584144042067</a>
+    </div>
+</div>
 
-        window.onload = () => {
-            const msg = encodeURIComponent(`Hola Justo, activo mi BCV LIVE ID: 8820`);
-            document.getElementById('qr-whatsapp').src = `https://api.qrserver.com/v1/create-qr-code/?size=150&data=https://wa.me/584144042067?text=${msg}`;
-            if(localStorage.getItem('auth_final_v20')) {
-                document.getElementById('bloqueo').style.display = 'none';
-                document.getElementById('pantalla-principal').style.display = 'flex';
-                obtenerTasas();
-                setInterval(obtenerTasas, 60000);
-            }
-            setInterval(() => {
-                const r = document.getElementById('reloj-vivo');
-                if(r) r.innerText = new Date().toLocaleString('es-VE', {day:'2-digit', month:'short', hour:'2-digit', minute:'2-digit', second:'2-digit'}).toUpperCase();
-            }, 1000);
-        };
-    </script>
+<script>
+    function actualizarOraculo() {
+        const ahora = new Date();
+        document.getElementById('reloj').innerText = ahora.toLocaleString('es-VE');
+
+        // Generación de ID Cuántico Único
+        const hash = Math.random().toString(36).substring(2, 15).toUpperCase();
+        document.getElementById('link-cuantico').innerText = "SOFIA-QUANTUM-ID-" + hash;
+
+        // Simulación de lectura de mercado (Próximamente conexión real)
+        document.getElementById('usd').innerText = "54.20";
+        document.getElementById('eur').innerText = "58.15";
+    }
+
+    setInterval(actualizarOraculo, 60000);
+    actualizarOraculo();
+</script>
+
 </body>
 </html>
