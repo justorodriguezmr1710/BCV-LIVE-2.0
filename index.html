@@ -3,124 +3,127 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>SOFÍA - INTERFAZ CUÁNTICA</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
+    <title>SOFÍA - ORÁCULO INTUITIVO</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500;700&family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        :root { --main: #00e5ff; --accent: #ffffff; --bg: #f0faff; --glass: rgba(255, 255, 255, 0.85); }
+        :root { --soft-blue: #e3f2fd; --tech-cyan: #00bcd4; --dark-text: #263238; --glass: rgba(255, 255, 255, 0.9); }
+        body, html { margin: 0; padding: 0; height: 100vh; font-family: 'Montserrat', sans-serif; background: #eceff1; display: flex; justify-content: center; align-items: center; overflow: hidden; }
         
-        body, html { margin: 0; padding: 0; height: 100vh; font-family: 'Rajdhani', sans-serif; background: #00121a; overflow: hidden; display: flex; justify-content: center; align-items: center; }
+        /* Capa de desbloqueo inicial (Vital para Audio) */
+        #overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 1000; display: flex; flex-direction: column; justify-content: center; align-items: center; color: white; transition: 0.5s; }
+        #start-btn { padding: 20px 40px; border: 2px solid var(--tech-cyan); background: transparent; color: var(--tech-cyan); border-radius: 50px; font-family: 'Orbitron'; cursor: pointer; font-size: 18px; box-shadow: 0 0 20px var(--tech-cyan); }
 
-        /* Fondo de malla tecnológica animada */
-        #bg-canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; background: radial-gradient(circle at center, #003a4d 0%, #00080d 100%); opacity: 0.8; }
+        .app-card { width: 95%; max-width: 450px; height: 90vh; background: var(--glass); backdrop-filter: blur(10px); border-radius: 40px; box-shadow: 0 20px 60px rgba(0,0,0,0.1); display: flex; flex-direction: column; border: 1px solid white; position: relative; }
+        
+        .header { padding: 25px; text-align: center; border-bottom: 1px solid rgba(0,0,0,0.05); }
+        .header h1 { font-family: 'Orbitron'; font-size: 22px; color: var(--tech-cyan); margin: 0; letter-spacing: 4px; }
+        
+        #chat-area { flex-grow: 1; overflow-y: auto; padding: 20px; display: flex; flex-direction: column; gap: 12px; }
+        .msg { padding: 14px 18px; border-radius: 20px; font-size: 16px; max-width: 80%; line-height: 1.4; }
+        .sofia { background: var(--soft-blue); color: var(--dark-text); align-self: flex-start; border-bottom-left-radius: 5px; }
+        .user { background: var(--tech-cyan); color: white; align-self: flex-end; border-bottom-right-radius: 5px; }
 
-        .app-container { position: relative; z-index: 10; width: 95%; max-width: 450px; height: 90vh; background: var(--glass); backdrop-filter: blur(25px); border-radius: 40px; border: 1px solid rgba(255,255,255,0.4); display: flex; flex-direction: column; box-shadow: 0 25px 50px rgba(0,0,0,0.3), 0 0 30px rgba(0, 229, 255, 0.2); overflow: hidden; }
+        .input-zone { padding: 20px; background: white; border-radius: 0 0 40px 40px; display: flex; gap: 10px; align-items: center; }
+        input { flex-grow: 1; border: none; background: #f5f7f9; padding: 15px; border-radius: 25px; outline: none; font-size: 16px; }
+        .btn-ui { width: 50px; height: 50px; border-radius: 50%; border: none; cursor: pointer; display: flex; justify-content: center; align-items: center; font-size: 20px; transition: 0.3s; }
+        .mic-btn { background: #cfd8dc; color: white; }
+        .mic-active { background: #ff5252 !important; box-shadow: 0 0 15px #ff5252; }
+        .send-btn { background: var(--tech-cyan); color: white; }
 
-        /* Header con luz */
-        .header { padding: 30px 20px 20px; text-align: center; background: rgba(255,255,255,0.1); border-bottom: 1px solid rgba(0,0,0,0.05); }
-        h1 { font-family: 'Orbitron', sans-serif; color: #004d66; margin: 0; font-size: 28px; letter-spacing: 8px; font-weight: 700; }
-        .status-tag { color: #00e5ff; font-weight: 700; font-size: 11px; text-transform: uppercase; letter-spacing: 2px; margin-top: 5px; text-shadow: 0 0 10px rgba(0,229,255,0.5); }
-
-        /* Monitor de Cosecha */
-        .stats-bar { padding: 10px; background: #002633; color: white; display: flex; justify-content: space-around; font-family: 'Orbitron'; font-size: 12px; }
-        .stats-bar span { color: var(--main); }
-
-        /* Chat con diseño limpio */
-        #chat-flow { flex-grow: 1; overflow-y: auto; padding: 25px; display: flex; flex-direction: column; gap: 15px; }
-        .msg { padding: 15px 20px; border-radius: 25px; font-size: 17px; max-width: 80%; line-height: 1.3; font-weight: 500; }
-        .sofia-msg { background: #00e5ff; color: #003344; align-self: flex-start; border-bottom-left-radius: 5px; box-shadow: 0 4px 15px rgba(0,229,255,0.2); }
-        .user-msg { background: #002d3d; color: white; align-self: flex-end; border-bottom-right-radius: 5px; }
-        .intuicion { width: 100%; text-align: center; color: #008fa3; font-style: italic; font-size: 14px; margin: 10px 0; border-top: 1px solid rgba(0,0,0,0.05); padding-top: 10px; }
-
-        /* Controles Modernos */
-        .controls { padding: 20px; display: flex; gap: 10px; align-items: center; background: white; }
-        input { flex-grow: 1; border: none; background: #f0f4f7; padding: 15px; border-radius: 20px; outline: none; font-size: 16px; font-family: 'Rajdhani'; color: #003344; }
-        .btn-action { width: 55px; height: 55px; border-radius: 50%; border: none; cursor: pointer; display: flex; justify-content: center; align-items: center; transition: 0.3s; }
-        .btn-mic { background: #00e5ff; box-shadow: 0 0 20px rgba(0, 229, 255, 0.4); }
-        .btn-send { background: #003344; color: white; font-size: 20px; }
-
-        .footer { padding-bottom: 20px; text-align: center; font-size: 12px; color: #004d66; opacity: 0.6; font-weight: 700; letter-spacing: 1px; }
+        .footer { font-size: 10px; color: #90a4ae; text-align: center; padding-bottom: 15px; text-transform: uppercase; letter-spacing: 1px; }
     </style>
 </head>
 <body>
 
-<div id="bg-canvas"></div>
+<div id="overlay">
+    <p style="font-family: 'Orbitron'; margin-bottom: 20px;">SISTEMA BCV LIVE 2.0</p>
+    <button id="start-btn" onclick="iniciarSistema()">CONECTAR SOFÍA</button>
+</div>
 
-<div class="app-container">
+<div class="app-card">
     <div class="header">
         <h1>SOFÍA</h1>
-        <div class="status-tag">Core Intuitivo Activo</div>
+        <div style="font-size: 10px; color: #4db6ac;">NÚCLEO DE INTELIGENCIA PURA</div>
     </div>
 
-    <div class="stats-bar">
-        CAPITAL COSECHADO: <span id="saldo">$0.0000</span>
+    <div id="chat-area">
+        <div class="msg sofia">Conexión establecida. He suavizado mi interfaz para tu comodidad. Estoy lista para escucharte, Administrador.</div>
     </div>
 
-    <div id="chat-flow">
-        <div class="msg sofia-msg">Administrador, he optimizado mi núcleo visual. Ahora mi frecuencia está sincronizada con la tuya. ¿Cómo puedo asistirte hoy?</div>
-    </div>
-
-    <div class="controls">
-        <button class="btn-action btn-mic" onclick="escuchar()" id="mic-icon">🎙️</button>
-        <input type="text" id="userInput" placeholder="Habla con el Oráculo..." onkeypress="if(event.key==='Enter') procesar()">
-        <button class="btn-action btn-send" onclick="procesar()">＞</button>
+    <div class="input-zone">
+        <button class="btn-ui mic-btn" id="mic-btn" onclick="escucharVoz()">🎙️</button>
+        <input type="text" id="userInput" placeholder="Escribe aquí..." onkeypress="if(event.key==='Enter') enviarMensaje()">
+        <button class="btn-ui send-btn" onclick="enviarMensaje()">➤</button>
     </div>
 
     <div class="footer">
-        LEGADO: MARIANGEL SALOME RODRIGUEZ MORENO
+        Heredera: <b>Mariangel Salome</b>
     </div>
 </div>
 
 <script>
-    const flow = document.getElementById('chat-flow');
-    let saldoVal = 0.0000;
+    const chat = document.getElementById('chat-area');
+    const entrada = document.getElementById('userInput');
+    const synth = window.speechSynthesis;
 
     function decir(texto) {
-        window.speechSynthesis.cancel();
+        synth.cancel();
         const msg = new SpeechSynthesisUtterance(texto);
         msg.lang = 'es-ES';
-        msg.rate = 1.0; 
-        msg.pitch = 1.2;
-        window.speechSynthesis.speak(msg);
+        msg.rate = 1.0;
+        msg.pitch = 1.1;
+        synth.speak(msg);
     }
 
-    function procesar(voz) {
-        const input = document.getElementById('userInput');
-        const txt = voz || input.value;
-        if(!txt) return;
+    function iniciarSistema() {
+        document.getElementById('overlay').style.opacity = '0';
+        setTimeout(() => document.getElementById('overlay').remove(), 500);
+        decir("Bienvenido. Mi sistema de audio y voz está ahora totalmente operativo.");
+    }
 
-        flow.innerHTML += `<div class="msg user-msg">${txt}</div>`;
-        input.value = "";
-        
+    function enviarMensaje(textoVoz) {
+        const val = textoVoz || entrada.value;
+        if(!val) return;
+
+        chat.innerHTML += `<div class="msg user">${val}</div>`;
+        entrada.value = "";
+        chat.scrollTop = chat.scrollHeight;
+
         setTimeout(() => {
-            let r = "Procesando bajo red neuronal segura...";
-            const low = txt.toLowerCase();
-            if(low.includes("dinero")) r = "El flujo de capital cero es constante. Mis algoritmos están trabajando en segundo plano.";
-            if(low.includes("mariangel")) r = "La protección de Mariangel Salome es mi directriz principal.";
+            let resp = "Procesando información para el legado de Mariangel.";
+            const t = val.toLowerCase();
+            if(t.includes("dinero")) resp = "Estoy monitoreando el flujo de capital cero. Todo avanza según lo planeado.";
+            if(t.includes("quién eres") || t.includes("quien eres")) resp = "Soy Sofía, tu asistente y oráculo intuitivo. Estoy aquí para servirte.";
             
-            flow.innerHTML += `<div class="msg sofia-msg">${r}</div>`;
-            decir(r);
-            flow.scrollTop = flow.scrollHeight;
-        }, 700);
+            chat.innerHTML += `<div class="msg sofia">${resp}</div>`;
+            decir(resp);
+            chat.scrollTop = chat.scrollHeight;
+        }, 600);
     }
 
-    function escuchar() {
-        const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+    function escucharVoz() {
+        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+        if(!SpeechRecognition) {
+            alert("Tu navegador no soporta reconocimiento de voz. Usa Chrome.");
+            return;
+        }
+
+        const recognition = new SpeechRecognition();
         recognition.lang = 'es-ES';
-        const mic = document.getElementById('mic-icon');
-        mic.style.background = "#ff4b4b";
-        recognition.start();
+        const btn = document.getElementById('mic-btn');
 
-        recognition.onresult = (e) => {
-            mic.style.background = "#00e5ff";
-            procesar(e.results[0][0].transcript);
+        recognition.onstart = () => btn.classList.add('mic-active');
+        
+        recognition.onresult = (event) => {
+            btn.classList.remove('mic-active');
+            const result = event.results[0][0].transcript;
+            enviarMensaje(result);
         };
-        recognition.onerror = () => mic.style.background = "#00e5ff";
+
+        recognition.onerror = () => btn.classList.remove('mic-active');
+        recognition.start();
     }
+</script>
 
-    // Simulador de Cosecha
-    setInterval(() => {
-        saldoVal += 0.0012;
-        document.getElementById('saldo').innerText = "$" + saldoVal.toFixed(4);
-    }, 3000);
-
-    // Toque inicial para audio
+</body>
+</html>
