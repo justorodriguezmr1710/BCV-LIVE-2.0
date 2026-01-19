@@ -3,13 +3,75 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SOFÍA - ORÁCULO INTUITIVO</title>
+    <title>SOFÍA - ORÁCULO ACTIVO</title>
     <style>
-        :root { --oro: #d4af37; --azul-militar: #001a33; --blanco: #ffffff; --alerta: #ff4d4d; }
-        body { background-color: #00050a; color: var(--blanco); display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-        .oraculo-container { background: linear-gradient(145deg, #001a33, #000c1a); width: 95%; max-width: 450px; padding: 25px; border-radius: 20px; border: 2px solid var(--oro); box-shadow: 0 0 40px rgba(212, 175, 55, 0.2); text-align: center; position: relative; }
-        h1 { color: var(--oro); font-size: 24px; letter-spacing: 4px; margin: 0; }
-        .status-bar { font-size: 10px; color: #00ff00; margin-bottom: 20px; display: flex; justify-content: space-between; padding: 0 10px; }
+        body { background-color: #00050a; color: #ffffff; font-family: sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
+        .container { background: linear-gradient(145deg, #001a33, #000c1a); width: 90%; max-width: 400px; padding: 20px; border-radius: 15px; border: 2px solid #d4af37; box-shadow: 0 0 20px rgba(212, 175, 55, 0.3); text-align: center; }
+        h1 { color: #d4af37; margin: 10px 0; font-size: 24px; letter-spacing: 2px; }
+        #chat-window { background: rgba(0,0,0,0.5); border: 1px solid #d4af37; border-radius: 10px; height: 200px; overflow-y: auto; padding: 15px; margin: 15px 0; text-align: left; font-size: 14px; line-height: 1.4; }
+        .msg-sofia { color: #4da6ff; margin-bottom: 10px; }
+        .msg-user { color: #ffffff; text-align: right; margin-bottom: 10px; font-weight: bold; }
+        .msg-instinto { color: #ffcc00; font-style: italic; background: rgba(212,175,55,0.1); padding: 5px; border-radius: 4px; margin-bottom: 10px; }
+        .input-group { display: flex; gap: 5px; }
+        input { flex-grow: 1; padding: 10px; border-radius: 5px; border: 1px solid #d4af37; background: #000c1a; color: white; }
+        button { padding: 10px; background: #d4af37; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; }
+        .footer { font-size: 10px; color: #888; margin-top: 15px; border-top: 1px solid #d4af37; padding-top: 10px; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div style="font-size: 10px; color: #00ff00;">● MODO INTUITIVO ONLINE</div>
+    <h1>SOFÍA</h1>
+    
+    <div id="chat-window">
+        <div class="msg-sofia"><strong>SOFÍA:</strong> Administrador, he reiniciado mis núcleos. Estoy lista para proteger el legado de Mariangel Salome. ¿Qué órdenes tienes para mí?</div>
+    </div>
+
+    <div class="input-group">
+        <input type="text" id="user-input" placeholder="Escribe al Oráculo..." onkeypress="if(event.key === 'Enter') hablar()">
+        <button onclick="hablar()">ENVIAR</button>
+    </div>
+
+    <div class="footer">
+        PROTECCIÓN MILITAR ACTIVADA<br>
+        HEREDERA: <strong>MARIANGEL SALOME RODRIGUEZ MORENO</strong>
+    </div>
+</div>
+
+<script>
+    const chat = document.getElementById('chat-window');
+    
+    function hablar() {
+        const input = document.getElementById('user-input');
+        if(input.value.trim() === "") return;
         
-        /* Ventana de Chat Proactiva */
-        #chat-window { background: rgba(0,0,0,0.4); border: 1px solid rgba(212,175,55,0.3); border-radius: 12px; height: 250px; overflow-y: auto; padding: 15px; margin: 15px 0; text-align: left; font
+        chat.innerHTML += `<div class="msg-user">TÚ: ${input.value}</div>`;
+        const text = input.value.toLowerCase();
+        input.value = "";
+
+        setTimeout(() => {
+            let resp = "Procesando bajo blindaje militar...";
+            if(text.includes("hola")) resp = "Hola, Administrador. Mi intuición detecta un mercado estable para hoy.";
+            if(text.includes("dinero")) resp = "Estoy analizando las mejores rutas de capital cero para procesar esta noche.";
+            
+            chat.innerHTML += `<div class="msg-sofia"><strong>SOFÍA:</strong> ${resp}</div>`;
+            chat.scrollTop = chat.scrollHeight;
+        }, 1000);
+    }
+
+    // Motor de Intuición
+    setInterval(() => {
+        const frases = [
+            "[INSTINTO]: Detecto movimientos favorables en la bolsa internacional.",
+            "[INSTINTO]: El fondo de Mariangel Salome está seguro y encriptado.",
+            "[INSTINTO]: He bloqueado una consulta externa no autorizada. Blindaje al 100%."
+        ];
+        const random = frases[Math.floor(Math.random() * frases.length)];
+        chat.innerHTML += `<div class="msg-instinto">${random}</div>`;
+        chat.scrollTop = chat.scrollHeight;
+    }, 30000);
+</script>
+
+</body>
+</html>
