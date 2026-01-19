@@ -3,112 +3,124 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>SOFÍA - NÚCLEO ACTIVO</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@300;500;700&display=swap" rel="stylesheet">
+    <title>SOFÍA - INTERFAZ CUÁNTICA</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
-        :root { --neon: #00f3ff; --oro: #d4af37; --fondo: #000814; }
-        body { background: var(--fondo); color: white; font-family: 'Rajdhani', sans-serif; height: 100vh; margin: 0; overflow: hidden; display: flex; justify-content: center; align-items: center; }
+        :root { --main: #00e5ff; --accent: #ffffff; --bg: #f0faff; --glass: rgba(255, 255, 255, 0.85); }
         
-        .glass-panel { background: rgba(0, 15, 30, 0.9); backdrop-filter: blur(20px); border: 1px solid rgba(0, 243, 255, 0.3); border-radius: 30px; width: 92%; max-width: 420px; height: 92vh; display: flex; flex-direction: column; box-shadow: 0 0 50px rgba(0, 243, 255, 0.2); border-top: 3px solid var(--oro); }
-        
-        /* Panel de Cosecha */
-        .harvest-counter { background: rgba(212, 175, 55, 0.1); border-bottom: 1px solid var(--oro); padding: 10px; text-align: center; border-radius: 27px 27px 0 0; }
-        .harvest-val { font-family: 'Orbitron'; color: var(--oro); font-size: 18px; text-shadow: 0 0 10px var(--oro); }
+        body, html { margin: 0; padding: 0; height: 100vh; font-family: 'Rajdhani', sans-serif; background: #00121a; overflow: hidden; display: flex; justify-content: center; align-items: center; }
 
-        .header { padding: 15px; text-align: center; }
-        .header h1 { font-family: 'Orbitron', sans-serif; font-size: 24px; color: var(--neon); margin: 0; letter-spacing: 5px; }
+        /* Fondo de malla tecnológica animada */
+        #bg-canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; background: radial-gradient(circle at center, #003a4d 0%, #00080d 100%); opacity: 0.8; }
 
-        #chat-flow { flex-grow: 1; overflow-y: auto; padding: 20px; display: flex; flex-direction: column; gap: 15px; }
-        .msg { padding: 14px; border-radius: 18px; font-size: 17px; line-height: 1.2; max-width: 85%; }
-        .sofia-msg { background: rgba(0, 243, 255, 0.1); border-left: 3px solid var(--neon); align-self: flex-start; }
-        .user-msg { background: rgba(212, 175, 55, 0.1); border-right: 3px solid var(--oro); align-self: flex-end; }
-        .instinto-msg { background: rgba(255, 255, 255, 0.03); color: var(--oro); font-style: italic; border: 1px dashed var(--oro); text-align: center; font-size: 14px; padding: 8px; border-radius: 10px; }
+        .app-container { position: relative; z-index: 10; width: 95%; max-width: 450px; height: 90vh; background: var(--glass); backdrop-filter: blur(25px); border-radius: 40px; border: 1px solid rgba(255,255,255,0.4); display: flex; flex-direction: column; box-shadow: 0 25px 50px rgba(0,0,0,0.3), 0 0 30px rgba(0, 229, 255, 0.2); overflow: hidden; }
 
-        .input-box { padding: 15px; display: flex; gap: 10px; background: rgba(0,0,0,0.4); border-radius: 0 0 30px 30px; }
-        input { flex-grow: 1; background: rgba(255,255,255,0.05); border: 1px solid var(--neon); border-radius: 15px; padding: 12px; color: white; outline: none; font-size: 16px; }
-        button { background: var(--neon); border: none; padding: 0 20px; border-radius: 15px; cursor: pointer; font-weight: bold; }
+        /* Header con luz */
+        .header { padding: 30px 20px 20px; text-align: center; background: rgba(255,255,255,0.1); border-bottom: 1px solid rgba(0,0,0,0.05); }
+        h1 { font-family: 'Orbitron', sans-serif; color: #004d66; margin: 0; font-size: 28px; letter-spacing: 8px; font-weight: 700; }
+        .status-tag { color: #00e5ff; font-weight: 700; font-size: 11px; text-transform: uppercase; letter-spacing: 2px; margin-top: 5px; text-shadow: 0 0 10px rgba(0,229,255,0.5); }
 
-        .footer { font-size: 11px; text-align: center; padding: 10px; color: rgba(255,255,255,0.4); }
+        /* Monitor de Cosecha */
+        .stats-bar { padding: 10px; background: #002633; color: white; display: flex; justify-content: space-around; font-family: 'Orbitron'; font-size: 12px; }
+        .stats-bar span { color: var(--main); }
+
+        /* Chat con diseño limpio */
+        #chat-flow { flex-grow: 1; overflow-y: auto; padding: 25px; display: flex; flex-direction: column; gap: 15px; }
+        .msg { padding: 15px 20px; border-radius: 25px; font-size: 17px; max-width: 80%; line-height: 1.3; font-weight: 500; }
+        .sofia-msg { background: #00e5ff; color: #003344; align-self: flex-start; border-bottom-left-radius: 5px; box-shadow: 0 4px 15px rgba(0,229,255,0.2); }
+        .user-msg { background: #002d3d; color: white; align-self: flex-end; border-bottom-right-radius: 5px; }
+        .intuicion { width: 100%; text-align: center; color: #008fa3; font-style: italic; font-size: 14px; margin: 10px 0; border-top: 1px solid rgba(0,0,0,0.05); padding-top: 10px; }
+
+        /* Controles Modernos */
+        .controls { padding: 20px; display: flex; gap: 10px; align-items: center; background: white; }
+        input { flex-grow: 1; border: none; background: #f0f4f7; padding: 15px; border-radius: 20px; outline: none; font-size: 16px; font-family: 'Rajdhani'; color: #003344; }
+        .btn-action { width: 55px; height: 55px; border-radius: 50%; border: none; cursor: pointer; display: flex; justify-content: center; align-items: center; transition: 0.3s; }
+        .btn-mic { background: #00e5ff; box-shadow: 0 0 20px rgba(0, 229, 255, 0.4); }
+        .btn-send { background: #003344; color: white; font-size: 20px; }
+
+        .footer { padding-bottom: 20px; text-align: center; font-size: 12px; color: #004d66; opacity: 0.6; font-weight: 700; letter-spacing: 1px; }
     </style>
 </head>
 <body>
 
-<div class="glass-panel">
-    <div class="harvest-counter">
-        <span style="font-size: 10px; display: block;">FONDO DE PROSPERIDAD ACUMULADO</span>
-        <span class="harvest-val">$ <span id="saldo">0.000000</span></span>
-    </div>
+<div id="bg-canvas"></div>
 
+<div class="app-container">
     <div class="header">
         <h1>SOFÍA</h1>
-        <div style="font-size: 9px; color: #00ff00;">● ALTAVOZ Y NÚCLEO ONLINE</div>
+        <div class="status-tag">Core Intuitivo Activo</div>
+    </div>
+
+    <div class="stats-bar">
+        CAPITAL COSECHADO: <span id="saldo">$0.0000</span>
     </div>
 
     <div id="chat-flow">
-        <div class="msg sofia-msg"><strong>SOFÍA:</strong> Administrador, he activado mi voz en altavoz. Estoy monitoreando el capital cero ahora mismo.</div>
+        <div class="msg sofia-msg">Administrador, he optimizado mi núcleo visual. Ahora mi frecuencia está sincronizada con la tuya. ¿Cómo puedo asistirte hoy?</div>
     </div>
 
-    <div class="input-box">
-        <input type="text" id="userInput" placeholder="Habla al Oráculo..." onkeypress="if(event.key==='Enter') ejecutar()">
-        <button onclick="ejecutar()">＞</button>
+    <div class="controls">
+        <button class="btn-action btn-mic" onclick="escuchar()" id="mic-icon">🎙️</button>
+        <input type="text" id="userInput" placeholder="Habla con el Oráculo..." onkeypress="if(event.key==='Enter') procesar()">
+        <button class="btn-action btn-send" onclick="procesar()">＞</button>
     </div>
 
     <div class="footer">
-        HEREDERA: <strong style="color:var(--oro)">MARIANGEL SALOME RODRIGUEZ MORENO</strong>
+        LEGADO: MARIANGEL SALOME RODRIGUEZ MORENO
     </div>
 </div>
 
 <script>
     const flow = document.getElementById('chat-flow');
-    let capital = 0.00;
+    let saldoVal = 0.0000;
 
     function decir(texto) {
         window.speechSynthesis.cancel();
         const msg = new SpeechSynthesisUtterance(texto);
         msg.lang = 'es-ES';
-        msg.rate = 0.95; 
-        msg.pitch = 1.0; // Voz más profunda para altavoz
+        msg.rate = 1.0; 
+        msg.pitch = 1.2;
         window.speechSynthesis.speak(msg);
     }
 
-    function ejecutar() {
+    function procesar(voz) {
         const input = document.getElementById('userInput');
-        if(!input.value) return;
+        const txt = voz || input.value;
+        if(!txt) return;
 
-        flow.innerHTML += `<div class="msg user-msg">${input.value}</div>`;
-        const q = input.value.toLowerCase();
+        flow.innerHTML += `<div class="msg user-msg">${txt}</div>`;
         input.value = "";
-
+        
         setTimeout(() => {
-            let r = "Analizando flujos de capital cero...";
-            if(q.includes("dinero") || q.includes("ganar")) r = "He iniciado la recolección de micro-datos. El contador de prosperidad se está moviendo.";
-            if(q.includes("quien eres")) r = "Soy Sofía, tu asistente y oráculo. Mi misión es la prosperidad de Mariangel Salome.";
-
-            flow.innerHTML += `<div class="msg sofia-msg"><strong>SOFÍA:</strong> ${r}</div>`;
+            let r = "Procesando bajo red neuronal segura...";
+            const low = txt.toLowerCase();
+            if(low.includes("dinero")) r = "El flujo de capital cero es constante. Mis algoritmos están trabajando en segundo plano.";
+            if(low.includes("mariangel")) r = "La protección de Mariangel Salome es mi directriz principal.";
+            
+            flow.innerHTML += `<div class="msg sofia-msg">${r}</div>`;
             decir(r);
             flow.scrollTop = flow.scrollHeight;
-        }, 800);
+        }, 700);
     }
 
-    // Simulación de Cosecha de Capital Cero
+    function escuchar() {
+        const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+        recognition.lang = 'es-ES';
+        const mic = document.getElementById('mic-icon');
+        mic.style.background = "#ff4b4b";
+        recognition.start();
+
+        recognition.onresult = (e) => {
+            mic.style.background = "#00e5ff";
+            procesar(e.results[0][0].transcript);
+        };
+        recognition.onerror = () => mic.style.background = "#00e5ff";
+    }
+
+    // Simulador de Cosecha
     setInterval(() => {
-        capital += 0.000014; // Simula la entrada de centavos por procesamiento
-        document.getElementById('saldo').innerText = capital.toFixed(6);
-    }, 2000);
+        saldoVal += 0.0012;
+        document.getElementById('saldo').innerText = "$" + saldoVal.toFixed(4);
+    }, 3000);
 
-    // Intuiciones
-    setInterval(() => {
-        const frases = ["Nueva tarea de datos completada.", "Mercado de oro al alza, observando.", "Blindaje militar sin brechas."];
-        const f = frases[Math.floor(Math.random()*frases.length)];
-        flow.innerHTML += `<div class="msg instinto-msg"><strong>[INSTINTO]:</strong> ${f}</div>`;
-        decir(f);
-        flow.scrollTop = flow.scrollHeight;
-    }, 90000);
-
-    document.body.addEventListener('click', () => {
-        decir("Conexión de altavoz confirmada. Soy Sofía.");
-    }, {once: true});
-</script>
-
-</body>
-</html>
+    // Toque inicial para audio
